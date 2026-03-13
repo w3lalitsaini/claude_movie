@@ -36,7 +36,7 @@ export default function RegisterPage() {
       });
       const data = await res.json();
       if (data.success) {
-        toast.success("Hotkey sent to your email!");
+        toast.success("OTP sent to your email!");
         setStep("OTP");
       } else {
         toast.error(data.error || "Failed to send Hotkey");
