@@ -55,7 +55,7 @@ export async function PUT(req: NextRequest) {
     const user = await User.findByIdAndUpdate(
       session.user.id,
       { name },
-      { new: true },
+      { returnDocument: 'after' },
     );
 
     if (!user)

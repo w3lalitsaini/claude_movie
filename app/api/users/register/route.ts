@@ -60,7 +60,8 @@ export async function POST(req: NextRequest) {
       },
       { status: 201 },
     );
-  } catch {
+  } catch (error) {
+    console.error("Register Error:", error);
     return NextResponse.json(
       { success: false, error: "Server error" },
       { status: 500 },

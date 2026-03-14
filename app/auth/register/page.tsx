@@ -187,7 +187,7 @@ export default function RegisterPage() {
                 disabled={loading}
                 className="w-full btn-red flex items-center justify-center gap-2 text-white font-bold py-3 rounded-sm uppercase tracking-widest text-sm disabled:opacity-50"
               >
-                {loading ? "Sending..." : "Send Hotkey"}{" "}
+                {loading ? "Sending..." : "Send OTP"}{" "}
                 <FiArrowRight size={16} />
               </button>
             </form>
@@ -195,7 +195,7 @@ export default function RegisterPage() {
             <form onSubmit={handleVerifyOtpAndRegister} className="space-y-4">
               <div>
                 <label className="text-[#666] text-xs uppercase tracking-wider font-semibold mb-1.5 block">
-                  Authentication Hotkey
+                  Authentication OTP key
                 </label>
                 <p className="text-[#aaa] text-xs mb-3">
                   A 6-digit code has been sent to{" "}

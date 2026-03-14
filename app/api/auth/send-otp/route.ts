@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
     await OTP.findOneAndUpdate(
       { email: email.toLowerCase() },
       { otp: hashedOtp, expiresAt: new Date(Date.now() + 5 * 60 * 1000) },
-      { upsert: true, new: true },
+      { upsert: true, returnDocument: 'after' },
     );
 
     // Send Email
