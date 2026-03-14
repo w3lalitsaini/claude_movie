@@ -42,12 +42,12 @@ export default function AdUnit({
       // @ts-ignore
       (window.adsbygoogle = window.adsbygoogle || []).push({});
     } catch (err) {
-      // silently ignore in dev
+      console.error("AdSense push error: ", err);
     }
   }, []);
 
   return (
-    <div className={`w-full flex justify-center my-4 overflow-hidden ${className}`}>
+    <div key={resolvedSlot} className={`w-full flex justify-center my-4 overflow-hidden ${className}`}>
       <ins
         ref={adRef}
         className="adsbygoogle"
@@ -59,7 +59,7 @@ export default function AdUnit({
         }}
         data-ad-client={AD_CLIENT}
         data-ad-slot={resolvedSlot}
-        data-ad-format={format}
+        data-ad-format={layout === "in-article" ? "fluid" : format}
         data-ad-layout={layout === "in-article" ? "in-article" : undefined}
         data-full-width-responsive={responsive ? "true" : "false"}
       />
