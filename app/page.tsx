@@ -26,6 +26,11 @@ export default function HomePage() {
 
       <div className="max-w-[1400px] mx-auto px-4">
         <TrendingMovies />
+
+        <div className="max-w-[1400px] mx-auto px-4 my-8">
+          <AdUnit />
+        </div>
+
         <LatestUploads />
 
         <div className="my-10">
@@ -33,6 +38,10 @@ export default function HomePage() {
         </div>
 
         <MovieCategories />
+
+        <div className="max-w-[1400px] mx-auto px-4 my-8">
+          <AdUnit />
+        </div>
         <TopRated />
 
         <div className="my-10">
@@ -40,6 +49,11 @@ export default function HomePage() {
         </div>
 
         <PopularGenres />
+
+        <div className="max-w-[1400px] mx-auto px-4 my-8">
+          <AdUnit />
+        </div>
+
         <BlogSection />
 
         <div className="my-10">

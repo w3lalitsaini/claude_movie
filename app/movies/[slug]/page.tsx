@@ -61,11 +61,17 @@ export default function MovieDetailsPage() {
           fetch(`/api/reviews?movieId=${d.movie._id}`)
             .then((r) => r.json())
             .then((rd) => setReviews(rd.success ? rd.reviews : []));
-          
+
           // Fetch related movies
           fetch(`/api/movies?category=${d.movie.category}&limit=6`)
             .then((r) => r.json())
-            .then((rel) => setRelatedMovies(rel.success ? rel.movies.filter((m: any) => m._id !== d.movie._id) : []));
+            .then((rel) =>
+              setRelatedMovies(
+                rel.success
+                  ? rel.movies.filter((m: any) => m._id !== d.movie._id)
+                  : [],
+              ),
+            );
         } else {
           setMovie(null);
         }
@@ -195,13 +201,13 @@ export default function MovieDetailsPage() {
             priority
           />
         )}
-        <div className="absolute inset-0 bg-linear-to-r from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent" />
-        <div className="absolute inset-0 bg-linear-to-t from-[#0a0a0a] to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-r from-black/80 dark:from-[#0a0a0a] via-black/40 dark:via-[#0a0a0a]/80 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-gray-50 dark:from-[#0a0a0a] to-transparent" />
 
         <div className="relative h-full max-w-[1400px] mx-auto px-4 flex items-end pb-10">
           <div className="flex gap-8 items-end">
             {/* Poster */}
-            <div className="hidden md:block relative w-44 h-64 shrink-0 rounded-sm overflow-hidden shadow-2xl border border-[#333]/50">
+            <div className="hidden md:block relative w-44 h-64 shrink-0 rounded-sm overflow-hidden shadow-2xl border border-white/20 dark:border-[#333]/50">
               <Image
                 src={movie.poster}
                 alt={movie.title}
@@ -221,33 +227,42 @@ export default function MovieDetailsPage() {
                     {q}
                   </span>
                 ))}
-                <span className="bg-[#1a1a1a] border border-[#333] text-[#aaa] text-xs px-2 py-0.5 rounded-sm">
+                <span className="bg-gray-200 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#333] text-gray-700 dark:text-[#aaa] text-xs px-2 py-0.5 rounded-sm">
                   {movie.language}
                 </span>
               </div>
 
-              <h1 className="font-display font-bold text-4xl md:text-5xl uppercase tracking-wide text-white mb-3">
+              <h1 className="font-display font-bold text-4xl md:text-5xl uppercase tracking-wide text-white drop-shadow-md mb-3">
                 {movie.title}
               </h1>
 
-              <div className="flex flex-wrap items-center gap-4 mb-4">
-                <div className="flex items-center gap-1.5">
+              <div className="flex flex-wrap items-center gap-4 mb-4 text-white drop-shadow-sm">
+                <div
+                  className="flex items-center gap-1.5 cursor-pointer hover:bg-white/20 dark:hover:bg-[#ffffff10] px-2 py-1 rounded-sm transition-colors border border-transparent hover:border-gray-200 dark:hover:border-[#333]"
+                  onClick={() => {
+                    const el = document.getElementById("review-form");
+                    if (el) el.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  title="Click to Rate"
+                >
                   <FiStar size={14} className="text-[#fbbf24]" fill="#fbbf24" />
                   <span className="text-white font-bold">
-                    {movie.rating?.toFixed(1)}
+                    {movie.rating?.toFixed(1) || "0.0"}
                   </span>
-                  <span className="text-[#666] text-sm">/ 10</span>
+                  <span className="text-gray-200 dark:text-[#666] text-sm">
+                    / 10 ({movie.reviewCount || reviews.length || 0}) rate now
+                  </span>
                 </div>
-                <span className="text-[#444]">|</span>
-                <div className="flex items-center gap-1.5 text-[#888] text-sm">
+                <span className="text-gray-300 dark:text-[#444]">|</span>
+                <div className="flex items-center gap-1.5 text-gray-200 dark:text-[#888] text-sm">
                   <FiCalendar size={13} /> {movie.releaseYear}
                 </div>
-                <span className="text-[#444]">|</span>
-                <div className="flex items-center gap-1.5 text-[#888] text-sm">
+                <span className="text-gray-300 dark:text-[#444]">|</span>
+                <div className="flex items-center gap-1.5 text-gray-200 dark:text-[#888] text-sm">
                   <FiClock size={13} /> {movie.duration} min
                 </div>
-                <span className="text-[#444]">|</span>
-                <div className="flex items-center gap-1.5 text-[#888] text-sm">
+                <span className="text-gray-300 dark:text-[#444]">|</span>
+                <div className="flex items-center gap-1.5 text-gray-200 dark:text-[#888] text-sm">
                   <FiGlobe size={13} /> {movie.language}
                 </div>
               </div>
@@ -257,7 +272,7 @@ export default function MovieDetailsPage() {
                   <Link
                     key={g}
                     href={`/movies?genre=${g}`}
-                    className="border border-[#333] hover:border-[#e50914] text-[#aaa] hover:text-[#e50914] text-xs px-2.5 py-1 rounded-sm transition-colors"
+                    className="border border-gray-300 dark:border-[#333] bg-black/40 hover:bg-black/80 dark:bg-transparent hover:border-[#e50914] text-gray-100 dark:text-[#aaa] hover:text-[#e50914] text-xs px-2.5 py-1 rounded-sm transition-colors drop-shadow-md"
                   >
                     {g}
                   </Link>
@@ -281,7 +296,7 @@ export default function MovieDetailsPage() {
                     const el = document.getElementById("review-form");
                     if (el) el.scrollIntoView({ behavior: "smooth" });
                   }}
-                  className="flex items-center gap-2 bg-[#ffffff10] hover:bg-[#ffffff20] border border-[#333] text-white font-bold px-5 py-2.5 rounded-sm text-sm transition-all"
+                  className="flex items-center gap-2 bg-white/10 dark:bg-[#ffffff10] hover:bg-white/20 dark:hover:bg-[#ffffff20] border border-white/20 dark:border-[#333] text-white font-bold px-5 py-2.5 rounded-sm text-sm transition-all"
                 >
                   <FiStar size={14} /> Write Review
                 </button>
@@ -313,7 +328,7 @@ export default function MovieDetailsPage() {
                 </button>
                 <button
                   onClick={handleShare}
-                  className="flex items-center gap-2 bg-[#ffffff10] hover:bg-[#ffffff20] border border-[#333] text-[#ccc] px-3.5 py-2.5 rounded-sm transition-all"
+                  className="flex items-center gap-2 bg-white/10 dark:bg-[#ffffff10] hover:bg-white/20 dark:hover:bg-[#ffffff20] border border-white/20 dark:border-[#333] text-white dark:text-[#ccc] px-3.5 py-2.5 rounded-sm transition-all"
                 >
                   <FiShare2 size={14} />
                 </button>
@@ -323,6 +338,8 @@ export default function MovieDetailsPage() {
         </div>
       </div>
 
+      <AdUnit layout="in-article" format="fluid" />
+
       {/* Content */}
       <div className="max-w-[1400px] mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -330,11 +347,11 @@ export default function MovieDetailsPage() {
           <div className="lg:col-span-2 space-y-12">
             {/* Overview */}
             <div>
-              <h2 className="font-display font-bold text-lg uppercase tracking-widest text-white mb-3 flex items-center gap-2">
+              <h2 className="font-display font-bold text-lg uppercase tracking-widest text-[#111] dark:text-white mb-3 flex items-center gap-2">
                 <span className="w-1 h-5 bg-[#e50914] inline-block rounded-sm" />{" "}
                 Synopsis
               </h2>
-              <p className="text-[#aaa] leading-relaxed mb-8">
+              <p className="text-gray-600 dark:text-[#aaa] leading-relaxed mb-8">
                 {movie.description}
               </p>
 
@@ -349,12 +366,12 @@ export default function MovieDetailsPage() {
                 ].map((item) => (
                   <div
                     key={item.label}
-                    className="bg-[#111] border border-[#1a1a1a] rounded-sm p-3"
+                    className="bg-white dark:bg-[#111] border border-gray-200 dark:border-[#1a1a1a] shadow-sm dark:shadow-none rounded-sm p-3"
                   >
-                    <span className="text-[#555] text-xs uppercase tracking-wider font-semibold">
+                    <span className="text-gray-500 dark:text-[#555] text-xs uppercase tracking-wider font-semibold">
                       {item.label}
                     </span>
-                    <p className="text-white font-semibold mt-0.5">
+                    <p className="text-[#111] dark:text-white font-semibold mt-0.5">
                       {item.val}
                     </p>
                   </div>
@@ -366,7 +383,7 @@ export default function MovieDetailsPage() {
 
             {/* Cast */}
             <div>
-              <h2 className="font-display font-bold text-lg uppercase tracking-widest text-white mb-5 flex items-center gap-2">
+              <h2 className="font-display font-bold text-lg uppercase tracking-widest text-[#111] dark:text-white mb-5 flex items-center gap-2">
                 <span className="w-1 h-5 bg-[#e50914] inline-block rounded-sm" />{" "}
                 Cast & Crew
               </h2>
@@ -374,9 +391,9 @@ export default function MovieDetailsPage() {
                 {movie.cast?.map((actor: any) => (
                   <div
                     key={actor.name}
-                    className="bg-[#111] border border-[#1a1a1a] rounded-sm p-3 flex items-center gap-3"
+                    className="bg-white dark:bg-[#111] border border-gray-200 dark:border-[#1a1a1a] shadow-sm dark:shadow-none rounded-sm p-3 flex items-center gap-3"
                   >
-                    <div className="relative w-12 h-12 shrink-0 rounded-full overflow-hidden bg-[#1a1a1a]">
+                    <div className="relative w-12 h-12 shrink-0 rounded-full overflow-hidden bg-gray-200 dark:bg-[#1a1a1a]">
                       {actor.photo && (
                         <Image
                           src={actor.photo}
@@ -387,10 +404,12 @@ export default function MovieDetailsPage() {
                       )}
                     </div>
                     <div>
-                      <p className="text-white font-semibold text-sm">
+                      <p className="text-[#111] dark:text-white font-semibold text-sm">
                         {actor.name}
                       </p>
-                      <p className="text-[#666] text-xs">{actor.character}</p>
+                      <p className="text-gray-500 dark:text-[#666] text-xs">
+                        {actor.character}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -401,11 +420,11 @@ export default function MovieDetailsPage() {
 
             {/* Trailer */}
             <div id="trailer-section">
-              <h2 className="font-display font-bold text-lg uppercase tracking-widest text-white mb-5 flex items-center gap-2">
+              <h2 className="font-display font-bold text-lg uppercase tracking-widest text-[#111] dark:text-white mb-5 flex items-center gap-2">
                 <span className="w-1 h-5 bg-[#e50914] inline-block rounded-sm" />{" "}
                 Official Trailer
               </h2>
-              <div className="aspect-video bg-[#111] rounded-sm overflow-hidden border border-[#222]">
+              <div className="aspect-video bg-gray-100 dark:bg-[#111] rounded-sm overflow-hidden border border-gray-200 dark:border-[#222]">
                 {movie.trailerUrl ? (
                   <iframe
                     src={movie.trailerUrl}
@@ -414,7 +433,7 @@ export default function MovieDetailsPage() {
                     className="w-full h-full"
                   />
                 ) : (
-                  <div className="h-full flex items-center justify-center text-[#444]">
+                  <div className="h-full flex items-center justify-center text-gray-400 dark:text-[#444]">
                     <FiPlay size={48} />
                   </div>
                 )}
@@ -425,7 +444,7 @@ export default function MovieDetailsPage() {
 
             {/* Download */}
             <div id="download-section">
-              <h2 className="font-display font-bold text-lg uppercase tracking-widest text-white mb-5 flex items-center gap-2">
+              <h2 className="font-display font-bold text-lg uppercase tracking-widest text-[#111] dark:text-white mb-5 flex items-center gap-2">
                 <span className="w-1 h-5 bg-[#e50914] inline-block rounded-sm" />{" "}
                 Download Links
               </h2>
@@ -433,120 +452,16 @@ export default function MovieDetailsPage() {
             </div>
 
             <AdUnit />
-
-            {/* Reviews */}
-            <div id="reviews-section">
-              <div className="flex items-center justify-between mb-5">
-                <h2 className="font-display font-bold text-lg uppercase tracking-widest text-white flex items-center gap-2">
-                  <span className="w-1 h-5 bg-[#e50914] inline-block rounded-sm" />{" "}
-                  User Reviews ({reviews.length})
-                </h2>
-                <button
-                  onClick={() => {
-                    const el = document.getElementById("review-form");
-                    if (el) el.scrollIntoView({ behavior: "smooth" });
-                  }}
-                  className="btn-red text-white text-xs font-bold px-4 py-2 rounded-sm"
-                >
-                  Write Review
-                </button>
-              </div>
-
-              <form
-                id="review-form"
-                onSubmit={handleSubmitReview}
-                className="bg-[#111] border border-[#222] rounded-sm p-5 mb-6"
-              >
-                <h3 className="text-white font-semibold mb-4">Your Review</h3>
-                <div className="mb-4">
-                  <label className="text-[#666] text-xs uppercase tracking-wider mb-2 block">
-                    Rating
-                  </label>
-                  <StarRating
-                    value={reviewData.rating}
-                    onChange={(v) =>
-                      setReviewData((p) => ({ ...p, rating: v }))
-                    }
-                    max={10}
-                    size={24}
-                  />
-                  <span className="text-[#aaa] text-sm mt-1 block">
-                    {reviewData.rating}/10
-                  </span>
-                </div>
-                <input
-                  value={reviewData.title}
-                  onChange={(e) =>
-                    setReviewData((p) => ({ ...p, title: e.target.value }))
-                  }
-                  placeholder="Review title"
-                  required
-                  className="w-full bg-[#0a0a0a] border border-[#2a2a2a] focus:border-[#e50914] text-white text-sm px-4 py-2.5 rounded-sm outline-none mb-3 transition-colors"
-                />
-                <textarea
-                  value={reviewData.content}
-                  onChange={(e) =>
-                    setReviewData((p) => ({ ...p, content: e.target.value }))
-                  }
-                  placeholder="Share your thoughts about this movie..."
-                  required
-                  rows={4}
-                  className="w-full bg-[#0a0a0a] border border-[#2a2a2a] focus:border-[#e50914] text-white text-sm px-4 py-2.5 rounded-sm outline-none resize-none mb-4 transition-colors"
-                />
-                <div className="flex gap-3">
-                  <button
-                    type="submit"
-                    className="btn-red text-white font-bold px-6 py-2 rounded-sm text-sm"
-                  >
-                    Submit
-                  </button>
-                </div>
-              </form>
-
-              <div className="space-y-3">
-                {reviews.map((r) => (
-                  <div
-                    key={r._id}
-                    className="bg-[#111] border border-[#1a1a1a] rounded-sm p-4"
-                  >
-                    <div className="flex items-start justify-between mb-2">
-                      <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 bg-[#e50914] rounded-full flex items-center justify-center text-white font-bold text-sm">
-                          {r.user.name.charAt(0).toUpperCase()}
-                        </div>
-                        <div>
-                          <p className="text-white font-semibold text-sm">
-                            {r.user.name}
-                          </p>
-                          <p className="text-[#555] text-xs">
-                            {new Date(r.createdAt).toLocaleDateString()}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-1 bg-[#e50914] text-white text-xs font-bold px-2 py-1 rounded-sm">
-                        <FiStar size={9} fill="currentColor" /> {r.rating}/10
-                      </div>
-                    </div>
-                    <h4 className="text-white font-semibold text-sm mb-1">
-                      {r.title}
-                    </h4>
-                    <p className="text-[#888] text-sm leading-relaxed">
-                      {r.content}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
 
           {/* Sidebar */}
           <div>
-            <div className="bg-[#111] border border-[#1a1a1a] rounded-sm p-5 mb-5">
-              <h3 className="font-display font-bold text-sm uppercase tracking-widest text-white mb-4 flex items-center gap-2">
+            <div className="bg-white dark:bg-[#111] border border-gray-200 dark:border-[#1a1a1a] shadow-sm dark:shadow-none rounded-sm p-5 mb-5">
+              <h3 className="font-display font-bold text-sm uppercase tracking-widest text-[#111] dark:text-white mb-4 flex items-center gap-2">
                 <span className="w-1 h-4 bg-[#e50914] inline-block rounded-sm" />{" "}
                 Movie Info
               </h3>
-              <div className="space-y-3">
+              <div className="space-y-3 pb-14">
                 {[
                   { label: "Status", val: "Available" },
                   { label: "Release", val: movie.releaseYear },
@@ -557,22 +472,129 @@ export default function MovieDetailsPage() {
                 ].map(({ label, val }) => (
                   <div
                     key={label}
-                    className="flex justify-between items-center py-2 border-b border-[#1a1a1a]"
+                    className="flex justify-between items-center py-2 border-b border-gray-200 dark:border-[#1a1a1a]"
                   >
-                    <span className="text-[#666] text-xs uppercase tracking-wider">
+                    <span className="text-gray-500 dark:text-[#666] text-xs uppercase tracking-wider">
                       {label}
                     </span>
-                    <span className="text-white font-semibold text-sm">
+                    <span className="text-[#111] dark:text-white font-semibold text-sm">
                       {val}
                     </span>
                   </div>
                 ))}
               </div>
+
+              <div id="reviews-section">
+                <div className="flex items-center justify-between mb-5">
+                  <h2 className="font-display font-bold text-lg uppercase tracking-widest text-[#111] dark:text-white flex items-center gap-2">
+                    <span className="w-1 h-5 bg-[#e50914] inline-block rounded-sm" />{" "}
+                    User Reviews ({reviews.length})
+                  </h2>
+                  <button
+                    onClick={() => {
+                      const el = document.getElementById("review-form");
+                      if (el) el.scrollIntoView({ behavior: "smooth" });
+                    }}
+                    className="btn-red text-white text-xs font-bold px-4 py-2 rounded-sm"
+                  >
+                    Write Review
+                  </button>
+                </div>
+
+                <form
+                  id="review-form"
+                  onSubmit={handleSubmitReview}
+                  className="bg-white dark:bg-[#111] border border-gray-200 dark:border-[#222] shadow-sm dark:shadow-none rounded-sm p-5 mb-6"
+                >
+                  <h3 className="text-[#111] dark:text-white font-semibold mb-4">
+                    Your Review
+                  </h3>
+                  <div className="mb-4">
+                    <label className="text-gray-500 dark:text-[#666] text-xs uppercase tracking-wider mb-2 block">
+                      Rating
+                    </label>
+                    <StarRating
+                      value={reviewData.rating}
+                      onChange={(v) =>
+                        setReviewData((p) => ({ ...p, rating: v }))
+                      }
+                      max={10}
+                      size={24}
+                    />
+                    <span className="text-gray-400 dark:text-[#aaa] text-sm mt-1 block">
+                      {reviewData.rating}/10
+                    </span>
+                  </div>
+                  <input
+                    value={reviewData.title}
+                    onChange={(e) =>
+                      setReviewData((p) => ({ ...p, title: e.target.value }))
+                    }
+                    placeholder="Review title (Optional)"
+                    className="w-full bg-gray-50 dark:bg-[#0a0a0a] border border-gray-200 dark:border-[#2a2a2a] focus:border-[#e50914] dark:focus:border-[#e50914] text-[#111] dark:text-white text-sm px-4 py-2.5 rounded-sm outline-none mb-3 transition-colors"
+                  />
+                  <textarea
+                    value={reviewData.content}
+                    onChange={(e) =>
+                      setReviewData((p) => ({ ...p, content: e.target.value }))
+                    }
+                    placeholder="Share your thoughts about this movie... (Optional)"
+                    rows={4}
+                    className="w-full bg-gray-50 dark:bg-[#0a0a0a] border border-gray-200 dark:border-[#2a2a2a] focus:border-[#e50914] dark:focus:border-[#e50914] text-[#111] dark:text-white text-sm px-4 py-2.5 rounded-sm outline-none resize-none mb-4 transition-colors"
+                  />
+                  <div className="flex gap-3">
+                    <button
+                      type="submit"
+                      className="btn-red text-white font-bold px-6 py-2 rounded-sm text-sm"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </form>
+
+                <div className="space-y-3">
+                  {reviews.map((r) => (
+                    <div
+                      key={r._id}
+                      className="bg-white dark:bg-[#111] border border-gray-200 dark:border-[#1a1a1a] shadow-sm dark:shadow-none rounded-sm p-4"
+                    >
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="flex items-center gap-3">
+                          <div className="w-9 h-9 bg-[#e50914] rounded-full flex items-center justify-center text-white font-bold text-sm">
+                            {r.user.name.charAt(0).toUpperCase()}
+                          </div>
+                          <div>
+                            <p className="text-[#111] dark:text-white font-semibold text-sm">
+                              {r.user.name}
+                            </p>
+                            <p className="text-gray-500 dark:text-[#555] text-xs">
+                              {new Date(r.createdAt).toLocaleDateString()}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-1 bg-[#e50914] text-white text-xs font-bold px-2 py-1 rounded-sm">
+                          <FiStar size={9} fill="currentColor" /> {r.rating}/10
+                        </div>
+                      </div>
+                      {r.title && (
+                        <h4 className="text-[#111] dark:text-white font-semibold text-sm mb-1">
+                          {r.title}
+                        </h4>
+                      )}
+                      {r.content && (
+                        <p className="text-gray-600 dark:text-[#888] text-sm leading-relaxed">
+                          {r.content}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* Related */}
             <div>
-              <h3 className="font-display font-bold text-sm uppercase tracking-widest text-white mb-4 flex items-center gap-2">
+              <h3 className="font-display font-bold text-sm uppercase tracking-widest text-[#111] dark:text-white mb-4 flex items-center gap-2">
                 <span className="w-1 h-4 bg-[#e50914] inline-block rounded-sm" />{" "}
                 Related Movies
               </h3>
@@ -583,7 +605,7 @@ export default function MovieDetailsPage() {
                     href={`/movies/${m.slug}`}
                     className="flex gap-3 group"
                   >
-                    <div className="relative w-14 h-20 shrink-0 rounded-sm overflow-hidden bg-[#1a1a1a]">
+                    <div className="relative w-14 h-20 shrink-0 rounded-sm overflow-hidden bg-gray-100 dark:bg-[#1a1a1a]">
                       <Image
                         src={m.poster}
                         alt={m.title}
@@ -592,19 +614,25 @@ export default function MovieDetailsPage() {
                       />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-white text-sm font-semibold group-hover:text-[#e50914] transition-colors line-clamp-2 leading-tight mb-1">
+                      <h4 className="text-[#111] dark:text-white text-sm font-semibold group-hover:text-[#e50914] transition-colors line-clamp-2 leading-tight mb-1">
                         {m.title}
                       </h4>
                       <div className="flex items-center gap-1 text-[#fbbf24] text-xs">
                         <FiStar size={10} fill="currentColor" />
-                        <span className="text-[#aaa]">{m.rating}</span>
+                        <span className="text-gray-500 dark:text-[#aaa]">
+                          {m.rating}
+                        </span>
                       </div>
-                      <p className="text-[#555] text-xs">{m.releaseYear}</p>
+                      <p className="text-gray-400 dark:text-[#555] text-xs">
+                        {m.releaseYear}
+                      </p>
                     </div>
                   </Link>
                 ))}
                 {relatedMovies.length === 0 && (
-                  <p className="text-[#444] text-xs italic">No related movies found</p>
+                  <p className="text-[#444] text-xs italic">
+                    No related movies found
+                  </p>
                 )}
               </div>
             </div>

@@ -14,20 +14,20 @@ const GENRES = [
 
 export default function PopularGenres() {
   return (
-    <section className="py-10 border-t border-[#1a1a1a]">
+    <section className="py-10 border-t border-gray-200 dark:border-[#1a1a1a] bg-white dark:bg-transparent">
       <SectionHeader title="Popular Genres" subtitle="Browse by genre" viewAllHref="/search" />
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
         {GENRES.map((genre) => (
           <Link
             key={genre.name}
             href={`/movies?genre=${genre.name}`}
-            className={`group bg-gradient-to-br ${genre.color} border border-[#222] hover:border-[#444] rounded-sm p-4 flex flex-col items-center gap-2 transition-all hover:-translate-y-1`}
+            className={`group bg-linear-to-br ${genre.color} border border-gray-200 dark:border-[#222] hover:border-gray-500 dark:hover:border-[#444] rounded-sm p-4 flex flex-col items-center gap-2 transition-all hover:-translate-y-1`}
           >
             <span className="text-2xl">{genre.emoji}</span>
-            <span className="font-display font-bold text-sm text-white uppercase tracking-wider group-hover:text-[#e50914] transition-colors">
+            <span className="font-display font-bold text-sm text-[#111] dark:text-white uppercase tracking-wider group-hover:text-[#e50914] transition-colors drop-shadow-md">
               {genre.name}
             </span>
-            <span className="text-[#666] text-xs">{genre.count}</span>
+            <span className="text-gray-600 dark:text-[#666] text-xs drop-shadow-md">{genre.count}</span>
           </Link>
         ))}
       </div>

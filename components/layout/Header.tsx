@@ -16,7 +16,10 @@ import {
   FiSettings,
   FiMenu,
   FiX,
+  FiMoon,
+  FiSun,
 } from "react-icons/fi";
+import { useTheme } from "next-themes";
 
 const genres = [
   "Action",
@@ -60,6 +63,12 @@ export default function Header() {
   const router = useRouter();
   const { data: session } = useSession();
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -92,18 +101,18 @@ export default function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-[#080808]/97 shadow-[0_2px_20px_rgba(0,0,0,0.8)]"
-          : "bg-[#0a0a0a]"
+          ? "bg-white/95 dark:bg-[#080808]/97 shadow-lg"
+          : "bg-white dark:bg-[#0a0a0a]"
       }`}
       style={{ backdropFilter: scrolled ? "blur(12px)" : "none" }}
     >
       {/* Top bar */}
-      <div className="border-b border-[#1a1a1a]">
+      <div className="border-b border-gray-200 dark:border-[#1a1a1a]">
         <div className="max-w-[1400px] mx-auto px-4 h-14 flex items-center gap-6">
           {/* Logo */}
-          <Link href="/" className="flex-shrink-0">
+          <Link href="/" className="shrink-0">
             <div className="flex items-center gap-0 font-display font-bold text-2xl tracking-wider">
-              <span className="text-white uppercase">ATOZ</span>
+              <span className="text-[#111] dark:text-white uppercase">ATOZ</span>
               <span className="bg-[#e50914] text-white px-2 py-0.5 uppercase tracking-wider">
                 MOVIES
               </span>
@@ -135,8 +144,18 @@ export default function Header() {
             </div>
           </form>
 
-          {/* Auth buttons */}
-          <div className="flex-shrink-0 flex items-center gap-3 ml-auto">
+          {/* Theme & Auth */}
+          <div className="shrink-0 flex items-center gap-3 ml-auto">
+            {mounted && (
+              <button
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                className="w-8 h-8 flex items-center justify-center rounded-sm bg-gray-100 dark:bg-[#1a1a1a] text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white hover:bg-gray-200 dark:hover:bg-[#2a2a2a] transition-colors"
+                aria-label="Toggle theme"
+              >
+                {theme === 'dark' ? <FiSun size={16} /> : <FiMoon size={16} />}
+              </button>
+            )}
+
             {session ? (
               <div className="relative" ref={dropdownRef}>
                 <button
@@ -154,12 +173,12 @@ export default function Header() {
                   <FiChevronDown size={12} />
                 </button>
                 {activeDropdown === "user" && (
-                  <div className="absolute right-0 top-10 w-52 bg-[#111] border border-[#222] shadow-2xl rounded-sm overflow-hidden z-50">
-                    <div className="px-4 py-3 border-b border-[#222]">
-                      <p className="text-sm font-semibold text-white">
+                  <div className="absolute right-0 top-10 w-52 bg-white dark:bg-[#111] border border-gray-200 dark:border-[#222] shadow-2xl rounded-sm overflow-hidden z-50">
+                    <div className="px-4 py-3 border-b border-gray-100 dark:border-[#222]">
+                      <p className="text-sm font-semibold text-[#111] dark:text-white">
                         {session.user?.name}
                       </p>
-                      <p className="text-xs text-[#666]">
+                      <p className="text-xs text-gray-500 dark:text-[#666]">
                         {session.user?.email}
                       </p>
                     </div>
@@ -228,7 +247,7 @@ export default function Header() {
 
       {/* Navigation bar */}
       <div
-        className="bg-[#0d0d0d] border-b border-[#1a1a1a] hidden md:block"
+        className="bg-gray-50 dark:bg-[#0d0d0d] border-b border-gray-200 dark:border-[#1a1a1a] hidden md:block"
         ref={dropdownRef}
       >
         <div className="max-w-[1400px] mx-auto px-4">
@@ -362,7 +381,7 @@ export default function Header() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-[#0d0d0d] border-b border-[#222]">
+        <div className="md:hidden bg-white dark:bg-[#0d0d0d] border-b border-gray-200 dark:border-[#222]">
           <div className="px-4 py-3">
             <form onSubmit={handleSearch} className="flex gap-2 mb-4">
               <input
@@ -422,7 +441,7 @@ function NavLink({
     <Link
       href={href}
       className={`flex items-center gap-1.5 px-3 h-11 text-xs font-bold uppercase tracking-widest transition-colors hover:text-[#e50914] ${
-        active ? "text-[#e50914]" : "text-[#cccccc]"
+        active ? "text-[#e50914]" : "text-gray-600 dark:text-[#cccccc]"
       }`}
     >
       {icon}

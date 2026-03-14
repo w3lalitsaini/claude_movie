@@ -33,9 +33,9 @@ export default function MovieCard({ movie, size = "md" }: MovieCardProps) {
 
   return (
     <Link href={`/movies/${movie.slug}`} className="block group movie-card">
-      <div className="bg-[#111] rounded-sm overflow-hidden border border-[#1a1a1a] hover:border-[#333]">
+      <div className="bg-white dark:bg-[#111] rounded-sm overflow-hidden border border-gray-200 dark:border-[#1a1a1a] hover:border-gray-300 dark:hover:border-[#333]">
         {/* Poster */}
-        <div className={`relative ${posterHeight} overflow-hidden bg-[#1a1a1a]`}>
+        <div className={`relative ${posterHeight} overflow-hidden bg-gray-100 dark:bg-[#1a1a1a]`}>
           {movie.poster ? (
             <Image
               src={movie.poster}
@@ -45,7 +45,7 @@ export default function MovieCard({ movie, size = "md" }: MovieCardProps) {
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
             />
           ) : (
-            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a]">
+            <div className="absolute inset-0 flex items-center justify-center bg-linear-to-br from-[#1a1a1a] to-[#0a0a0a]">
               <span className="text-[#333] font-display font-bold text-4xl">CV</span>
             </div>
           )}
@@ -87,13 +87,13 @@ export default function MovieCard({ movie, size = "md" }: MovieCardProps) {
 
         {/* Info */}
         <div className="p-3">
-          <h3 className="text-white font-semibold text-sm leading-tight line-clamp-2 group-hover:text-[#e50914] transition-colors mb-1.5 font-display uppercase tracking-wide">
+          <h3 className="text-[#111] dark:text-white font-semibold text-sm leading-tight line-clamp-2 group-hover:text-[#e50914] transition-colors mb-1.5 font-display uppercase tracking-wide">
             {movie.title}
           </h3>
           <div className="flex items-center justify-between">
-            <span className="text-[#666] text-xs">{movie.releaseYear}</span>
+            <span className="text-gray-500 dark:text-[#666] text-xs">{movie.releaseYear}</span>
             {movie.genres?.[0] && (
-              <span className="text-[#555] text-xs">{movie.genres[0]}</span>
+              <span className="text-gray-400 dark:text-[#555] text-xs">{movie.genres[0]}</span>
             )}
           </div>
         </div>
@@ -105,11 +105,11 @@ export default function MovieCard({ movie, size = "md" }: MovieCardProps) {
 // Skeleton loader
 export function MovieCardSkeleton() {
   return (
-    <div className="bg-[#111] rounded-sm overflow-hidden border border-[#1a1a1a]">
-      <div className="h-64 skeleton" />
+    <div className="bg-white dark:bg-[#111] rounded-sm overflow-hidden border border-gray-200 dark:border-[#1a1a1a]">
+      <div className="h-64 skeleton opacity-20 dark:opacity-100" />
       <div className="p-3">
-        <div className="h-4 skeleton rounded mb-2" />
-        <div className="h-3 skeleton rounded w-2/3" />
+        <div className="h-4 skeleton rounded mb-2 opacity-20 dark:opacity-100" />
+        <div className="h-3 skeleton rounded w-2/3 opacity-20 dark:opacity-100" />
       </div>
     </div>
   );

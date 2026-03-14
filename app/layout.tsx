@@ -50,7 +50,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3:wght@300;400;600;700&display=swap"
           rel="stylesheet"
         />
 
@@ -77,7 +77,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         ></script>
       </head>
-      <body className="bg-[#0a0a0a] text-white antialiased">
+      <body className="bg-[#f4f4f5] dark:bg-[#0a0a0a] text-[#111] dark:text-white antialiased transition-colors duration-200">
         <Providers>
           <Header />
           <main className="min-h-screen">{children}</main>

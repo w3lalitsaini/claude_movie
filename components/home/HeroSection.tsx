@@ -79,8 +79,8 @@ export default function HeroSection() {
           />
         )}
         {/* Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#080808] via-[#080808]/50 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-transparent to-[#080808]/30" />
+        <div className="absolute inset-0 bg-linear-to-r from-[#080808] via-[#080808]/50 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-[#080808] via-transparent to-[#080808]/30" />
       </div>
 
       {/* Content */}
@@ -156,11 +156,11 @@ export default function HeroSection() {
 
         {/* Side poster – desktop only */}
         <div className="hidden xl:block absolute right-12 bottom-0 w-52">
-          <div className="relative w-52 h-72 rounded-sm overflow-hidden shadow-2xl border border-[#333]/90">
+          <div className="relative w-52 h-72 rounded-sm overflow-hidden shadow-2xl border border-white/10 dark:border-[#333]/90">
             {movie.poster && (
               <Image src={movie.poster} alt={movie.title} fill className="object-cover" />
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#080808]/80 to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/80 dark:from-[#080808]/80 to-transparent" />
           </div>
         </div>
       </div>

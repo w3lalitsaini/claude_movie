@@ -20,7 +20,7 @@ export default function TrendingMovies() {
   }, []);
 
   return (
-    <section className="py-10">
+    <section className="py-10 bg-white dark:bg-transparent">
       <SectionHeader title="Trending Movies" subtitle="Most watched this week" viewAllHref="/movies?trending=true" />
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-8 gap-3">
         {loading

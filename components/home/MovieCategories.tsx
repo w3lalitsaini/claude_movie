@@ -42,14 +42,14 @@ const CATEGORIES = [
 
 export default function MovieCategories() {
   return (
-    <section className="py-10 border-t border-[#1a1a1a]">
+    <section className="py-10 border-t border-gray-200 dark:border-[#1a1a1a] bg-white dark:bg-transparent">
       <SectionHeader title="Browse Categories" subtitle="Find your favorite genre" />
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
         {CATEGORIES.map((cat) => (
           <Link
             key={cat.href}
             href={cat.href}
-            className="group relative h-36 rounded-sm overflow-hidden border border-[#1a1a1a] hover:border-[#333]"
+            className="group relative h-36 rounded-sm overflow-hidden border border-gray-200 dark:border-[#1a1a1a] hover:border-gray-500 dark:hover:border-[#333]"
           >
             <Image
               src={cat.img}
@@ -58,7 +58,7 @@ export default function MovieCategories() {
               className="object-cover transition-transform duration-500 group-hover:scale-110"
             />
             {/* Dark overlay */}
-            <div className="absolute inset-0 bg-[#000]/60 group-hover:bg-[#000]/40 transition-colors" />
+            <div className="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition-colors" />
             {/* Color accent bottom */}
             <div
               className="absolute bottom-0 left-0 right-0 h-1 opacity-80"
@@ -66,10 +66,10 @@ export default function MovieCategories() {
             />
             {/* Content */}
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-1">
-              <h3 className="font-display font-bold text-white text-lg uppercase tracking-widest group-hover:text-[#e50914] transition-colors">
+              <h3 className="font-display font-bold text-white text-lg uppercase tracking-widest group-hover:text-[#e50914] transition-colors drop-shadow-md">
                 {cat.label}
               </h3>
-              <p className="text-[#888] text-xs group-hover:text-[#aaa] transition-colors">{cat.count}</p>
+              <p className="text-gray-100 dark:text-[#888] text-xs group-hover:text-white dark:group-hover:text-[#aaa] transition-colors drop-shadow-md">{cat.count}</p>
             </div>
           </Link>
         ))}

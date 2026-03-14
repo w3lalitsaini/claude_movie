@@ -102,11 +102,11 @@ export default function BlogPage() {
         </div>
         {/* Header */}
         <div className="mb-8">
-          <h1 className="font-display font-bold text-4xl text-white uppercase tracking-widest mb-2 flex items-center gap-3">
+          <h1 className="font-display font-bold text-4xl text-[#111] dark:text-white uppercase tracking-widest mb-2 flex items-center gap-3">
             <span className="w-1 h-10 bg-[#e50914] inline-block rounded-sm" />
             CineVerse Blog
           </h1>
-          <p className="text-[#666] ml-5">
+          <p className="text-gray-600 dark:text-[#666] ml-5">
             Reviews, top lists, industry news & more
           </p>
         </div>
@@ -117,7 +117,7 @@ export default function BlogPage() {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-1.5 text-xs font-bold uppercase tracking-widest rounded-sm border transition-all ${activeCategory === cat ? "bg-[#e50914] border-[#e50914] text-white" : "bg-[#111] border-[#222] text-[#888] hover:border-[#444] hover:text-white"}`}
+              className={`px-4 py-1.5 text-xs font-bold uppercase tracking-widest rounded-sm border transition-all ${activeCategory === cat ? "bg-[#e50914] border-[#e50914] text-white" : "bg-white dark:bg-[#111] border-gray-200 dark:border-[#222] text-gray-600 dark:text-[#888] hover:border-gray-500 dark:hover:border-[#444] hover:text-[#111] dark:hover:text-white"}`}
             >
               {cat}
             </button>
@@ -134,13 +134,13 @@ export default function BlogPage() {
                 fill
                 className="object-cover card-image"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/70 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-r from-[#0a0a0a] via-[#0a0a0a]/70 to-transparent" />
               <div className="absolute inset-0 flex items-end p-8">
                 <div className="max-w-2xl">
                   <span className="inline-block bg-[#e50914] text-white text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-sm mb-3">
                     {featured.category}
                   </span>
-                  <h2 className="font-display font-bold text-3xl md:text-4xl text-white uppercase tracking-wide leading-tight mb-3 group-hover:text-[#e50914] transition-colors">
+                  <h2 className="font-display font-bold text-3xl md:text-4xl text-white uppercase tracking-wide leading-tight mb-3 group-hover:text-[#e50914] transition-colors drop-shadow-md">
                     {featured.title}
                   </h2>
                   <p className="text-[#aaa] text-sm leading-relaxed mb-4 line-clamp-2">
@@ -177,27 +177,27 @@ export default function BlogPage() {
               href={`/blog/${post.slug}`}
               className="group block"
             >
-              <div className="bg-[#111] border border-[#1a1a1a] hover:border-[#333] rounded-sm overflow-hidden transition-all hover:-translate-y-1">
-                <div className="relative h-44 overflow-hidden">
+              <div className="bg-white dark:bg-[#111] border border-gray-200 dark:border-[#1a1a1a] hover:border-gray-300 dark:hover:border-[#333] rounded-sm overflow-hidden transition-all hover:-translate-y-1 shadow-sm dark:shadow-none">
+                <div className="relative h-44 overflow-hidden bg-gray-100 dark:bg-transparent">
                   <Image
                     src={post.featuredImage}
                     alt={post.title}
                     fill
                     className="object-cover card-image"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#111] to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/80 dark:from-[#111] to-transparent" />
                   <span className="absolute top-3 left-3 bg-[#e50914] text-white text-xs font-bold uppercase tracking-wider px-2 py-1 rounded-sm">
                     {post.category}
                   </span>
                 </div>
                 <div className="p-4">
-                  <h3 className="text-white font-semibold text-sm leading-tight mb-2 group-hover:text-[#e50914] transition-colors line-clamp-2">
+                  <h3 className="text-[#111] dark:text-white font-semibold text-sm leading-tight mb-2 group-hover:text-[#e50914] transition-colors line-clamp-2">
                     {post.title}
                   </h3>
-                  <p className="text-[#666] text-xs leading-relaxed mb-3 line-clamp-2">
+                  <p className="text-gray-500 dark:text-[#666] text-xs leading-relaxed mb-3 line-clamp-2">
                     {post.excerpt}
                   </p>
-                  <div className="flex items-center gap-3 text-[#555] text-xs">
+                  <div className="flex items-center gap-3 text-gray-400 dark:text-[#555] text-xs">
                     <span className="flex items-center gap-1">
                       <FiUser size={10} /> {post.author.name}
                     </span>

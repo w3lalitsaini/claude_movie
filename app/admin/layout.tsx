@@ -6,7 +6,7 @@ import Link from "next/link";
 import {
   FiHome, FiFilm, FiUsers, FiMessageSquare, FiFileText,
   FiGrid, FiImage, FiSettings, FiMenu, FiX, FiLogOut,
-  FiTrendingUp, FiBarChart2, FiTag,
+  FiTrendingUp, FiBarChart2, FiTag, FiMail
 } from "react-icons/fi";
 import { signOut } from "next-auth/react";
 
@@ -19,6 +19,7 @@ const navItems = [
   { href: "/admin/reviews", icon: FiMessageSquare, label: "Reviews" },
   { href: "/admin/media", icon: FiImage, label: "Media" },
   { href: "/admin/analytics", icon: FiBarChart2, label: "Analytics" },
+  { href: "/admin/newsletter", icon: FiMail, label: "Newsletter" },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -59,8 +60,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="h-14 flex items-center px-4 border-b border-[#1a1a1a] gap-3">
           {sidebarOpen && (
             <Link href="/admin" className="flex items-center gap-0 font-display font-bold text-lg tracking-wider">
-              <span className="text-white uppercase">CINE</span>
-              <span className="bg-[#e50914] text-white px-1.5 py-0.5 uppercase text-sm">VERSE</span>
+              <span className="text-white uppercase">ATOZ</span>
+              <span className="bg-[#e50914] text-white px-1.5 py-0.5 uppercase text-sm">MOVIES</span>
             </Link>
           )}
           <button
@@ -119,7 +120,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
       {/* Main */}
       <main className={`flex-1 transition-all duration-300 ${sidebarOpen ? "ml-56" : "ml-14"}`}>
-        <div className="min-h-screen">{children}</div>
+        <div className="min-h-screen pt-28">{children}</div>
       </main>
     </div>
   );

@@ -18,7 +18,7 @@ export default function LatestUploads() {
   }, []);
 
   return (
-    <section className="py-10 border-t border-[#1a1a1a]">
+    <section className="py-10 border-t border-gray-200 dark:border-[#1a1a1a] bg-white dark:bg-transparent">
       <SectionHeader title="Latest Uploads" subtitle="Freshly added movies & series" viewAllHref="/movies" />
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
         {loading

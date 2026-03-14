@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { FiFacebook, FiTwitter, FiYoutube, FiSend } from "react-icons/fi";
 import toast from "react-hot-toast";
+import AdUnit from "../ui/AdUnit";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
@@ -40,21 +41,25 @@ export default function Footer() {
 
   return (
     <footer className="bg-[#080808] border-t border-[#1a1a1a] mt-16">
+      <div className="max-w-[1400px] mx-auto px-4 my-8">
+        <AdUnit />
+      </div>
+
       <div className="max-w-[1400px] mx-auto px-4 py-14">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Brand column */}
           <div className="md:col-span-1">
             <Link href="/" className="inline-block mb-5">
               <div className="flex items-center gap-0 font-display font-bold text-2xl tracking-wider">
-                <span className="text-white uppercase">CINE</span>
+                <span className="text-white uppercase">AtoZ</span>
                 <span className="bg-[#e50914] text-white px-2 py-0.5 uppercase tracking-wider">
-                  VERSE
+                  MOVIES
                 </span>
               </div>
             </Link>
             <p className="text-[#777] text-sm leading-relaxed mb-6">
-              CineVerse is the premier destination for Bollywood, Hollywood, and
-              South Hindi Dubbed content. Watch trailers, read reviews, and
+              AtoZ MOVIES is the premier destination for Bollywood, Hollywood,
+              and South Hindi Dubbed content. Watch trailers, read reviews, and
               discover your next favorite film.
             </p>
             <div className="flex items-center gap-3">
@@ -80,7 +85,7 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-display font-semibold text-sm uppercase tracking-widest mb-5 flex items-center gap-3">
               <span className="w-1 h-5 bg-[#e50914] inline-block rounded-sm"></span>
-              EXPLORE CINEVERSE
+              EXPLORE AtoZ MOVIES
             </h4>
             <ul className="space-y-2.5">
               {[
@@ -192,7 +197,7 @@ export default function Footer() {
       <div className="border-t border-[#1a1a1a] py-5">
         <div className="max-w-[1400px] mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-[#444] text-xs">
-            © {new Date().getFullYear()} CineVerse. All rights reserved. For
+            © {new Date().getFullYear()} AtoZ Movies. All rights reserved. For
             entertainment purposes only.
           </p>
           <div className="flex items-center gap-5">
