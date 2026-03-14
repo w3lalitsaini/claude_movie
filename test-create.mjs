@@ -1,7 +1,5 @@
-
 import mongoose from 'mongoose';
-const uri = 'mongodb+srv://sainilalit082_db_user:LbDGhuMIZaLvrdUs@cluster01.wvaap9s.mongodb.net/?appName=Cluster01';
-
+const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/atozmovies';
 const UserSchema = new mongoose.Schema({
   name: { type: String, required: true, trim: true },
   email: { type: String, required: true, unique: true, lowercase: true },

@@ -1,8 +1,7 @@
-
 import { MongoClient } from 'mongodb';
 import bcrypt from 'bcryptjs';
 
-const uri = 'mongodb+srv://sainilalit082_db_user:LbDGhuMIZaLvrdUs@cluster01.wvaap9s.mongodb.net/?appName=Cluster01';
+const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/atozmovies';
 const client = new MongoClient(uri);
 
 async function run() {
