@@ -35,7 +35,9 @@ export async function POST(req: NextRequest) {
     // 3. Optimization
     const seoData = await optimizeForSEO({
       title: title,
-      content: rawContent
+      content: rawContent,
+      description: metadata.overview || "",
+      keywords: metadata.genres || []
     });
 
     // 4. Monetization
