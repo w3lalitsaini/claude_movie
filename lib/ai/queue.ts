@@ -20,7 +20,7 @@ connection.on("error", (err: any) => {
 });
 
 export const agentQueue = new Queue("agent-tasks", { 
-  connection,
+  connection: connection as any,
   defaultJobOptions: {
     attempts: 3,
     backoff: {
