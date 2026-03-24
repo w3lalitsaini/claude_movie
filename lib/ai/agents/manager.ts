@@ -64,7 +64,6 @@ export async function decideNextActions(): Promise<AgentTask[]> {
   const feedback = await Analytics.find().sort({ views: -1 }).limit(20);
 
   // 1.1 Decisional Context: Check ROI & Goals
-  const config = await AgentConfig.findOne() || await AgentConfig.create({});
   const recentRevenue = await Revenue.find().sort({ createdAt: -1 }).limit(7);
   const totalRevenue = recentRevenue.reduce((acc, r: any) => acc + r.amount, 0);
   const totalCost = 50; // Simulated cost for now
