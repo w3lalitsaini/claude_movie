@@ -175,7 +175,7 @@ export default function EditMoviePage() {
   }
 
   return (
-    <div className="pt-30 p-6 max-w-4xl">
+    <div className="p-0 max-w-4xl">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="font-display font-bold text-2xl text-white uppercase tracking-widest">Edit Movie</h1>

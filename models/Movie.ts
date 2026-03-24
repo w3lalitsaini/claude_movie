@@ -28,6 +28,13 @@ export interface IMovie extends Document {
   platform: string;
   metaTitle: string;
   metaDescription: string;
+  aiMetadata?: {
+    seoScore: number;
+    trendScore: number;
+    revenueGenerated: number;
+    lastAgentAction: string;
+  };
+  humanApproved: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -77,12 +84,18 @@ const MovieSchema = new Schema<IMovie>(
     platform: { type: String, default: "" },
     metaTitle: { type: String, default: "" },
     metaDescription: { type: String, default: "" },
+    aiMetadata: {
+      seoScore: { type: Number, default: 0 },
+      trendScore: { type: Number, default: 0 },
+      revenueGenerated: { type: Number, default: 0 },
+      lastAgentAction: { type: String, default: "" },
+    },
+    humanApproved: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
 
-MovieSchema.index({ title: "text", description: "text" }, { language_override: "no_language" });
-MovieSchema.index({ slug: 1 });
+MovieSchema.index({ title: "text", description: "text" }, { default_language: "none", language_override: "dummy_field" });
 MovieSchema.index({ category: 1 });
 MovieSchema.index({ genres: 1 });
 MovieSchema.index({ isTrending: 1 });

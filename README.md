@@ -1,78 +1,115 @@
-# AtoZ Movies 🎬
+# 🎬 AtoZ Movies (Cineverse)
 
-A full-stack movie streaming guide built with **Next.js 15**, **MongoDB**, **NextAuth**, and **Cloudinary**. Features Bollywood, Hollywood, South Hindi Dubbed films, Web Series, reviews, blogs, and a complete admin panel.
+**AtoZ Movies** (internally known as **Cineverse**) is a modern, high-performance movie platform and blog built with the latest web technologies. It offers a seamless experience for discovering movies, reading news, and participating in discussions.
 
-## 🌐 Live
-**[atozmovies.in](https://www.atozmovies.in)**
+---
 
-## ✨ Features
-- 🎥 Movie & Web Series catalog with filters (category, genre, year, language, quality, platform)
-- 🔍 Full-text search
-- ⭐ User reviews & ratings
-- 📝 Blog with comments
-- 👤 User accounts (watchlist, favorites, profile)
-- 🛡️ Admin panel (movies, blogs, users, reviews, analytics)
-- 📺 Google AdSense integration
-- 📊 Google Analytics 4
-- 🖼️ Cloudinary image uploads
-- 💌 Newsletter subscription
+## 🚀 Key Features
+
+### 🎞️ Movie Management
+
+- **Extensive Database**: Browse Bollywood, Hollywood, and South Hindi Dubbed movies.
+- **Categorization**: Filter by genres, latest uploads, and top-rated movies.
+- **Dynamic Search**: High-speed search functionality for finding specific titles.
+
+### 📝 Blog System
+
+- **Rich Content**: Engaging blog posts about the latest movie trends and news.
+- **Comments & Engagement**: User-interactive comment sections for every post.
+- **Newsletter**: Automated subscription system for platform updates.
+
+### 🛡️ Core Infrastructure
+
+- **Secure Authentication**: Robust system using NextAuth with OTP-based verification.
+- **Admin Dashboard**: Full-featured control panel for managing movies, blogs, users, and comments.
+- **Cloud Media**: High-performance image hosting via Cloudinary.
+- **SEO Optimized**: Fully optimized for search engines with dynamic sitemaps and robots.txt.
+
+---
 
 ## 🛠️ Tech Stack
-- **Framework**: Next.js 15 (App Router)
-- **Database**: MongoDB + Mongoose
-- **Auth**: NextAuth.js
-- **Images**: Cloudinary
-- **Styling**: Tailwind CSS v4
-- **Email**: Nodemailer
 
-## 🚀 Quick Start
+- **Framework**: [Next.js](https://nextjs.org/) (App Router)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Database**: [MongoDB](https://www.mongodb.com/) with [Mongoose](https://mongoosejs.com/)
+- **Authentication**: [NextAuth.js](https://next-auth.js.org/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Media Hosting**: [Cloudinary](https://cloudinary.com/)
+- **Email**: [Nodemailer](https://nodemailer.com/)
+- **Icons**: [React Icons](https://react-icons.github.io/react-icons/)
+- **Notifications**: [React Hot Toast](https://react-hot-toast.com/)
 
-```bash
-git clone https://github.com/w3lalitsaini/claude_movie.git
-cd claude_movie
-npm install
-cp .env.example .env
-# Fill in your .env values
-npm run dev
+---
+
+## ⚙️ Getting Started
+
+### Prerequisites
+
+- Node.js (Latest LTS recommended)
+- MongoDB instance (Atlas or local)
+- Cloudinary account for media storage
+
+### Installation
+
+1. **Clone the repository**:
+
+   ```bash
+   git clone https://github.com/your-username/atoz-movies.git
+   cd atoz-movies
+   ```
+
+2. **Install dependencies**:
+
+   ```bash
+   npm install
+   ```
+
+3. **Configure Environment Variables**:
+   Copy `.env.example` to `.env` and fill in your credentials.
+
+   ```bash
+   cp .env.example .env
+   ```
+
+4. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) to see the result.
+
+---
+
+## 📄 Project Structure
+
+```text
+├── app/            # Next.js App Router (Pages, API Routes)
+├── components/     # Reusable UI components
+├── lib/            # Shared utilities (DB connection, Auth config)
+├── models/         # Mongoose schemas (Movie, Blog, User, etc.)
+├── public/         # Static assets
+├── types/          # TypeScript definitions
+└── tailwind.config.ts # Styling configuration
 ```
 
-## ⚙️ Environment Variables
+---
 
-Copy `.env.example` to `.env` and fill in:
+## 📡 Deployment
 
-| Variable | Description |
-|---|---|
-| `MONGODB_URI` | MongoDB Atlas connection string |
-| `NEXTAUTH_SECRET` | Random 32+ char secret |
-| `NEXTAUTH_URL` | Your production URL |
-| `CLOUDINARY_*` | Cloudinary credentials |
-| `NEXT_PUBLIC_GA_ID` | Google Analytics ID |
-| `NEXT_PUBLIC_ADSENSE_CLIENT` | AdSense publisher ID |
-| `NEXT_PUBLIC_AD_SLOT_*` | AdSense slot IDs |
+This project is optimized for **Vercel**.
 
-## 📁 Project Structure
+1. Push your code to a GitHub repository.
+2. Connect the repository to Vercel.
+3. Configure the environment variables in the Vercel dashboard.
+4. Deploy!
 
-```
-app/
-├── (auth)         # Login, Register, Reset Password
-├── admin/         # Admin dashboard
-├── api/           # REST API routes
-├── blog/          # Blog listing & detail
-├── movies/        # Movie listing & detail
-├── search/        # Search page
-└── user/          # User profile, watchlist, favorites
-components/
-├── home/          # Homepage sections
-├── layout/        # Header, Footer
-├── movies/        # Movie card components
-└── ui/            # Shared UI components (AdUnit, etc.)
-models/            # Mongoose schemas
-lib/               # Auth, DB, helpers
-```
+---
 
-## 📦 Deployment
+## 🤝 Contributing
 
-See [DEPLOY.md](./DEPLOY.md) for step-by-step Vercel + Hostinger deployment guide.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-## 📄 License
-MIT
+---
+
+## 📜 License
+
+This project is licensed under the MIT License - see the `LICENSE` file for details.

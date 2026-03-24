@@ -150,7 +150,7 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="p-6">
+    <div className="p-0">
       {/* Header */}
       <div className="flex items-center justify-between mb-7">
         <div>

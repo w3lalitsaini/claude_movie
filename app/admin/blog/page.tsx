@@ -72,14 +72,14 @@ export default function AdminBlogPage() {
 
   if (loading) {
     return (
-      <div className="p-6 flex justify-center items-center min-h-[400px]">
+      <div className="p-0 flex justify-center items-center min-h-[400px]">
         <div className="w-8 h-8 border-2 border-[#e50914] border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
-    <div className="p-6">
+    <div className="p-0">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="font-display font-bold text-2xl text-white uppercase tracking-widest">
@@ -159,7 +159,7 @@ export default function AdminBlogPage() {
                   </span>
                 </td>
                 <td className="px-5 py-3.5 text-[#888] text-sm">
-                  {p.author.name}
+                  {p.author?.name || "Admin"}
                 </td>
                 <td className="px-5 py-3.5">
                   <div className="flex items-center gap-1 text-[#666] text-sm">

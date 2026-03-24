@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { FiUpload, FiPlus, FiX, FiSave } from "react-icons/fi";
+import { FiUpload, FiPlus, FiX, FiSave, FiZap } from "react-icons/fi";
 import toast from "react-hot-toast";
 
 const GENRES = [
@@ -130,6 +130,61 @@ export default function NewMoviePage() {
   const toggleArray = (arr: string[], val: string) =>
     arr.includes(val) ? arr.filter((v) => v !== val) : [...arr, val];
 
+  const [isAiGenerating, setIsAiGenerating] = useState(false);
+
+  const handleAiGenerate = async () => {
+    if (!form.title) {
+      toast.error("Please enter a movie title first");
+      return;
+    }
+    setIsAiGenerating(true);
+    const toastId = toast.loading("🤖 AI is brainstorming content and generating images...");
+
+    try {
+      const res = await fetch("/api/admin/movies/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title: form.title }),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        const { data: aiData } = data;
+        setForm(p => ({
+          ...p,
+          description: aiData.description,
+          releaseYear: aiData.releaseYear,
+          duration: aiData.duration,
+          imdbRating: aiData.imdbRating,
+          director: aiData.director,
+          genres: aiData.genres,
+          metaTitle: aiData.metaTitle,
+          metaDescription: aiData.metaDescription,
+          category: aiData.category,
+          language: aiData.language,
+          poster: aiData.poster,
+          backdrop: aiData.backdrop,
+        }));
+        
+        if (aiData.cast) {
+          setCast(aiData.cast.map((c: any) => ({
+            name: c.name,
+            character: c.character,
+            photo: "",
+          })));
+        }
+
+        toast.success("Magic! All content generated and populated.", { id: toastId });
+      } else {
+        toast.error(data.error || "AI generation failed", { id: toastId });
+      }
+    } catch {
+      toast.error("Something went wrong with the AI", { id: toastId });
+    } finally {
+      setIsAiGenerating(false);
+    }
+  };
+
   const handleSubmit = async (e?: React.FormEvent, submitStatus?: "active" | "inactive") => {
     if (e) e.preventDefault();
     if (!form.title || !form.description || !form.category) {
@@ -163,7 +218,7 @@ export default function NewMoviePage() {
   const tabs = ["basic", "media", "cast", "downloads", "seo"];
 
   return (
-    <div className="pt-30 p-6 max-w-4xl">
+    <div className="p-0 max-w-4xl">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="font-display font-bold text-2xl text-white uppercase tracking-widest">
@@ -222,15 +277,35 @@ export default function NewMoviePage() {
           <div className="space-y-5">
             <FormRow>
               <Field label="Movie Title *" required>
-                <input
-                  value={form.title}
-                  onChange={(e) =>
-                    setForm((p) => ({ ...p, title: e.target.value }))
-                  }
-                  required
-                  placeholder="Enter movie title"
-                  className="admin-input"
-                />
+                <div className="flex gap-2">
+                  <input
+                    value={form.title}
+                    onChange={(e) =>
+                      setForm((p) => ({ ...p, title: e.target.value }))
+                    }
+                    required
+                    placeholder="Enter movie title"
+                    className="admin-input"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleAiGenerate}
+                    disabled={isAiGenerating || !form.title}
+                    className={`shrink-0 px-4 py-2.5 rounded-sm font-bold text-xs uppercase tracking-widest transition-all flex items-center gap-2 ${
+                      isAiGenerating 
+                        ? "bg-purple-900/50 text-purple-300 cursor-not-allowed border border-purple-500/30"
+                        : "bg-linear-to-r from-purple-600 to-blue-600 text-white hover:shadow-[0_0_15px_rgba(147,51,234,0.4)] border border-purple-400/30"
+                    }`}
+                    title="Generate all content with AI"
+                  >
+                    {isAiGenerating ? (
+                      <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    ) : (
+                      <FiZap className="text-yellow-400" />
+                    )}
+                    Magic AI
+                  </button>
+                </div>
               </Field>
               <Field label="Category *" required>
                 <select
@@ -441,7 +516,7 @@ export default function NewMoviePage() {
                   placeholder="https://... or upload file"
                   className="admin-input"
                 />
-                <label className="flex-shrink-0 cursor-pointer bg-[#1a1a1a] border border-[#2a2a2a] hover:border-[#444] text-[#ccc] px-4 rounded-sm flex items-center justify-center transition-colors">
+                <label className="shrink-0 cursor-pointer bg-[#1a1a1a] border border-[#2a2a2a] hover:border-[#444] text-[#ccc] px-4 rounded-sm flex items-center justify-center transition-colors">
                   {uploadingField === "poster" ? "..." : <FiUpload size={14} />}
                   <input
                     type="file"
@@ -470,7 +545,7 @@ export default function NewMoviePage() {
                   placeholder="Wide backdrop image URL"
                   className="admin-input"
                 />
-                <label className="flex-shrink-0 cursor-pointer bg-[#1a1a1a] border border-[#2a2a2a] hover:border-[#444] text-[#ccc] px-4 rounded-sm flex items-center justify-center transition-colors">
+                <label className="shrink-0 cursor-pointer bg-[#1a1a1a] border border-[#2a2a2a] hover:border-[#444] text-[#ccc] px-4 rounded-sm flex items-center justify-center transition-colors">
                   {uploadingField === "backdrop" ? (
                     "..."
                   ) : (

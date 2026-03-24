@@ -45,7 +45,7 @@ export default function AdminAnalyticsPage() {
   };
 
   return (
-    <div className="p-6">
+    <div className="p-0">
       <div className="mb-6">
         <h1 className="font-display font-bold text-2xl text-white uppercase tracking-widest">Analytics</h1>
         <p className="text-[#555] text-sm mt-0.5">Platform performance overview</p>

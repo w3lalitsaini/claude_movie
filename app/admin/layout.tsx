@@ -6,12 +6,14 @@ import Link from "next/link";
 import {
   FiHome, FiFilm, FiUsers, FiMessageSquare, FiFileText,
   FiGrid, FiImage, FiSettings, FiMenu, FiX, FiLogOut,
-  FiTrendingUp, FiBarChart2, FiTag, FiMail
+  FiTrendingUp, FiBarChart2, FiTag, FiMail, FiZap
 } from "react-icons/fi";
 import { signOut } from "next-auth/react";
+import AdminHeader from "./components/AdminHeader";
 
 const navItems = [
   { href: "/admin", icon: FiHome, label: "Dashboard", exact: true },
+  { href: "/admin/agent", icon: FiTrendingUp, label: "AI Command Center" },
   { href: "/admin/movies", icon: FiFilm, label: "Movies" },
   { href: "/admin/categories", icon: FiGrid, label: "Categories" },
   { href: "/admin/blog", icon: FiFileText, label: "Blog Posts" },
@@ -49,78 +51,87 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     exact ? pathname === href : pathname.startsWith(href);
 
   return (
-    <div className="min-h-screen bg-[#060606] flex">
+    <div className="min-h-screen bg-[#060606] flex font-sans selection:bg-yellow-500/30">
+      <AdminHeader />
+      
       {/* Sidebar */}
       <aside
-        className={`fixed left-0 top-28 bottom-0 z-40 bg-[#0a0a0a] border-r border-[#1a1a1a] flex flex-col transition-all duration-300 ${
-          sidebarOpen ? "w-56" : "w-14"
+        className={`fixed left-0 top-0 bottom-0 z-60 bg-[#0a0a0a]/80 backdrop-blur-xl border-r border-[#1a1a1a] flex flex-col transition-all duration-300 ${
+          sidebarOpen ? "w-64" : "w-20"
         }`}
       >
-        {/* Logo */}
-        <div className="h-14 flex items-center px-4 border-b border-[#1a1a1a] gap-3">
-          {sidebarOpen && (
-            <Link href="/admin" className="flex items-center gap-0 font-display font-bold text-lg tracking-wider">
-              <span className="text-white uppercase">ATOZ</span>
-              <span className="bg-[#e50914] text-white px-1.5 py-0.5 uppercase text-sm">MOVIES</span>
-            </Link>
-          )}
+        {/* Logo/Header in Sidebar */}
+        <div className="h-20 flex items-center px-6 border-b border-[#1a1a1a] gap-4">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="ml-auto text-[#666] hover:text-white transition-colors p-1"
+            className="text-gray-500 hover:text-white transition-colors"
           >
-            {sidebarOpen ? <FiX size={18} /> : <FiMenu size={18} />}
+            {sidebarOpen ? <FiX size={20} /> : <FiMenu size={20} />}
           </button>
+          {sidebarOpen && (
+            <Link href="/admin" className="font-display font-black text-xl tracking-tighter text-white uppercase text-[15px]">
+              MASTER <span className="text-yellow-500">HQ</span>
+            </Link>
+          )}
         </div>
 
-        {/* Admin badge */}
-        {sidebarOpen && (
-          <div className="mx-3 my-3 bg-[#e50914]/10 border border-[#e50914]/20 rounded-sm px-3 py-2">
-            <p className="text-[#e50914] text-xs font-bold uppercase tracking-widest">Admin Panel</p>
-            <p className="text-[#666] text-xs truncate">{session.user?.name}</p>
-          </div>
-        )}
-
         {/* Nav */}
-        <nav className="flex-1 overflow-y-auto py-2">
+        <nav className="flex-1 overflow-y-auto py-8 px-3 space-y-1.5 custom-scrollbar">
           {navItems.map(({ href, icon: Icon, label, exact }) => (
             <Link
               key={href}
               href={href}
-              className={`admin-nav-item flex items-center gap-3 px-4 py-2.5 text-sm font-semibold transition-all ${
+              className={`flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-bold transition-all group ${
                 isActive(href, exact)
-                  ? "bg-[#e50914]/15 border-l-[3px] border-[#e50914] text-white pl-[13px]"
-                  : "text-[#666] hover:text-white border-l-[3px] border-transparent"
+                  ? "bg-yellow-500 text-black shadow-[0_0_20px_rgba(234,179,8,0.3)]"
+                  : "text-gray-500 hover:text-white hover:bg-white/5"
               }`}
               title={!sidebarOpen ? label : undefined}
             >
-              <Icon size={16} className="flex-shrink-0" />
-              {sidebarOpen && <span>{label}</span>}
+              <Icon size={18} className={`shrink-0 transition-transform group-hover:scale-110 ${isActive(href, exact) ? "text-black" : "text-yellow-500"}`} />
+              {sidebarOpen && <span className="uppercase tracking-tighter text-[11px]">{label}</span>}
             </Link>
           ))}
         </nav>
 
         {/* Bottom */}
-        <div className="border-t border-[#1a1a1a] p-3 space-y-1">
+        <div className="p-4 border-t border-[#1a1a1a] space-y-2">
           <Link
             href="/"
-            className="flex items-center gap-3 px-3 py-2 text-xs text-[#555] hover:text-[#ccc] transition-colors rounded-sm hover:bg-[#1a1a1a]"
+            className="flex items-center gap-4 px-4 py-3 text-[10px] font-bold text-gray-500 hover:text-white rounded-2xl hover:bg-white/5 transition-all uppercase tracking-tighter"
           >
-            <FiHome size={14} />
-            {sidebarOpen && "View Site"}
+            <FiHome size={16} />
+            {sidebarOpen && "Front Office"}
           </Link>
           <button
             onClick={() => signOut()}
-            className="w-full flex items-center gap-3 px-3 py-2 text-xs text-[#555] hover:text-[#e50914] transition-colors rounded-sm hover:bg-[#1a1a1a]"
+            className="w-full flex items-center gap-4 px-4 py-3 text-[10px] font-bold text-red-500/70 hover:text-red-500 rounded-2xl hover:bg-red-500/5 transition-all uppercase tracking-tighter"
           >
-            <FiLogOut size={14} />
-            {sidebarOpen && "Sign Out"}
+            <FiLogOut size={16} />
+            {sidebarOpen && "Kill Session"}
           </button>
         </div>
       </aside>
 
-      {/* Main */}
-      <main className={`flex-1 transition-all duration-300 ${sidebarOpen ? "ml-56" : "ml-14"}`}>
-        <div className="min-h-screen pt-28">{children}</div>
+      {/* Main Content Area */}
+      <main className={`flex-1 min-h-screen pt-20 transition-all duration-300 ${sidebarOpen ? "pl-64" : "pl-20"}`}>
+        {/* Status Bar (Now smaller and integrated) */}
+        <div className="h-10 bg-[#0a0a0a] border-b border-[#1a1a1a] flex items-center px-8 gap-8 overflow-x-auto no-scrollbar">
+          <div className="flex items-center gap-2 shrink-0">
+            <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.5)]" />
+            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Network: Secure</span>
+          </div>
+          <div className="flex items-center gap-2 shrink-0 border-l border-[#1a1a1a] pl-8">
+            <FiZap className="text-yellow-500 text-[10px]" />
+            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">AI: Llama-3 DeepSync</span>
+          </div>
+          <div className="flex items-center gap-2 shrink-0 border-l border-[#1a1a1a] pl-8">
+            <FiTrendingUp className="text-blue-500 text-[10px]" />
+            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">DB: Upstash REST [Active]</span>
+          </div>
+        </div>
+
+        <div className="p-8 md:p-5">{children}</div>
       </main>
     </div>
   );

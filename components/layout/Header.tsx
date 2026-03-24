@@ -55,7 +55,11 @@ const hollywoodItems = [
   },
 ];
 
+import { usePathname } from "next/navigation";
+
 export default function Header() {
+  const pathname = usePathname();
+  if (pathname.startsWith("/admin")) return null;
   const [scrolled, setScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);

@@ -58,7 +58,7 @@ export default function AdminNewsletterPage() {
   }
 
   return (
-    <div className="p-8">
+    <div className="p-0">
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-2xl font-bold text-white mb-1">Newsletter Subscribers</h1>

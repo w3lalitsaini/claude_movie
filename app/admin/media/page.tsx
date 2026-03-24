@@ -129,7 +129,7 @@ export default function AdminMediaPage() {
   if (loading) return <div className="p-6 text-white">Loading media...</div>;
 
   return (
-    <div className="p-6">
+    <div className="p-0">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="font-display font-bold text-2xl text-white uppercase tracking-widest">

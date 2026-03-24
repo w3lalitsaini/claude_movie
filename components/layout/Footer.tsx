@@ -4,8 +4,11 @@ import { useState } from "react";
 import { FiFacebook, FiTwitter, FiYoutube, FiSend } from "react-icons/fi";
 import toast from "react-hot-toast";
 import AdUnit from "../ui/AdUnit";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname();
+  if (pathname.startsWith("/admin")) return null;
   const [email, setEmail] = useState("");
 
   const [loading, setLoading] = useState(false);

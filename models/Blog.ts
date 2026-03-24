@@ -13,6 +13,13 @@ export interface IBlog extends Document {
   views: number;
   metaTitle: string;
   metaDescription: string;
+  aiMetadata?: {
+    seoScore: number;
+    engagementScore: number;
+    revenueGenerated: number;
+    lastAgentAction: string;
+  };
+  humanApproved: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -31,6 +38,13 @@ const BlogSchema = new Schema<IBlog>(
     views: { type: Number, default: 0 },
     metaTitle: { type: String, default: "" },
     metaDescription: { type: String, default: "" },
+    aiMetadata: {
+      seoScore: { type: Number, default: 0 },
+      engagementScore: { type: Number, default: 0 },
+      revenueGenerated: { type: Number, default: 0 },
+      lastAgentAction: { type: String, default: "" },
+    },
+    humanApproved: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
